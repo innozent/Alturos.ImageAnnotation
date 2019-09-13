@@ -68,8 +68,8 @@ namespace Alturos.ImageAnnotation.Contract.Amazon
 
             if (string.IsNullOrEmpty(s3ServiceUrl) || string.IsNullOrEmpty(dynamoDbServiceUrl))
             {
-                this._s3Client = new AmazonS3Client(accessKeyId, secretAccessKey, RegionEndpoint.EUWest1);
-                this._dynamoDbClient = new AmazonDynamoDBClient(accessKeyId, secretAccessKey, RegionEndpoint.EUWest1);
+                this._s3Client = new AmazonS3Client(accessKeyId, secretAccessKey, RegionEndpoint.USEast1);
+                this._dynamoDbClient = new AmazonDynamoDBClient(accessKeyId, secretAccessKey, RegionEndpoint.USEast1);
             }
             else
             {
