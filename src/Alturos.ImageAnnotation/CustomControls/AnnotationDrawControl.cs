@@ -22,7 +22,7 @@ namespace Alturos.ImageAnnotation.CustomControls
 
         private readonly int _mouseDragElementSize = 10;
         private readonly int _maxMouseDistanceToDragPoint = 10;
-        private readonly Size _minSize = new Size(30, 30);
+        private readonly Size _minSize = new Size(20, 20);
         private readonly Size _minSizeForEdgeAnchors = new Size(75, 75);
 
         private bool _mouseOver;
@@ -269,8 +269,8 @@ namespace Alturos.ImageAnnotation.CustomControls
                 return;
             }
 
-            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            e.Graphics.InterpolationMode = InterpolationMode.High;
+            e.Graphics.SmoothingMode = SmoothingMode.Default;
+            e.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
 
             var drawOffset = this._mouseDragElementSize / 2;
 
@@ -415,11 +415,13 @@ namespace Alturos.ImageAnnotation.CustomControls
                 return;
             }
 
-            using (var brush = new SolidBrush(DrawHelper.GetColorCode(objectClass.Id)))
-            using (var bgBrush = new SolidBrush(Color.FromArgb(128, 255, 255, 255)))
+//            using (var brush = new SolidBrush(DrawHelper.GetColorCode(objectClass.Id)))
+            using (var brush = new SolidBrush(Color.Black))
+            using (var bgBrush = new SolidBrush(Color.FromArgb(196, 255, 255, 255)))
             using (var font = new Font("Arial", 12))
             {
-                var text = $"{objectClass.Id} {objectClass.Name}";
+//                var text = $"{objectClass.Id} {objectClass.Name}";
+                var text = $"{objectClass.Id}";
                 var point = new PointF(x + 4, y + 4);
                 var size = graphics.MeasureString(text, font);
 
@@ -649,13 +651,21 @@ namespace Alturos.ImageAnnotation.CustomControls
 
             // Select object class
             var index = -1;
+            var currentIndex = currentBoundingBox.ObjectIndex;
+            if (currentIndex.ToString().Length > 2)
+            {
+                currentIndex = 0;
+            } 
+            
             if (e.KeyCode >= Keys.D0 && e.KeyCode <= Keys.D9)
             {
                 index = (int)e.KeyCode - (int)Keys.D0;
+                index = int.Parse($"{currentIndex}{index}");
             }
             else if (e.KeyCode >= Keys.NumPad0 && e.KeyCode <= Keys.NumPad9)
             {
                 index = (int)e.KeyCode - (int)Keys.NumPad0;
+                index = int.Parse($"{currentIndex}{index}");
             }
             else if (e.KeyCode == Keys.Right)
             {
@@ -670,6 +680,14 @@ namespace Alturos.ImageAnnotation.CustomControls
             {
                 this._changedImageViaKey = true;
                 currentBoundingBox.ObjectIndex = index;
+            }
+            else
+            {
+                if (index > this._objectClasses.Count)
+                {
+                    this._changedImageViaKey = true;
+                    currentBoundingBox.ObjectIndex = index % 10;
+                }
             }
 
             // Move Bounding Box

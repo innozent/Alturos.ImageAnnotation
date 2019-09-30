@@ -66,9 +66,9 @@ namespace Alturos.ImageAnnotation
             this.annotationPackageListControl.Setup(this._annotationPackageProvider);
             this.annotationImageListControl.Setup(this._annotationPackageProvider);
 
-            this.autoplaceAnnotationsToolStripMenuItem.Checked = true;
+            this.autoplaceAnnotationsToolStripMenuItem.Checked = false;
 
-            this.annotationDrawControl.AutoplaceAnnotations = true;
+            this.annotationDrawControl.AutoplaceAnnotations = false;
             this.annotationDrawControl.SetObjectClasses(this._annotationConfig.ObjectClasses);
             this.annotationDrawControl.SetLabelsVisible(false);
 

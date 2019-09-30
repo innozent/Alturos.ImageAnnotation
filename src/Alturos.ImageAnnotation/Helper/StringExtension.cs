@@ -26,14 +26,16 @@ namespace Alturos.ImageAnnotation.Helper
 
         public static string ReplaceSpecialCharacters(this string str, char replacementChar = '_')
         {
-            var sb = new StringBuilder();
-
-            foreach (var c in str)
-            {
-                sb.Append(char.IsLetterOrDigit(c) ? c : replacementChar);
-            }
-
-            return sb.ToString();
+//            var sb = new StringBuilder();
+//
+//            foreach (var c in str)
+//            {
+//                sb.Append(char.IsLetterOrDigit(c) ? c : replacementChar);
+//            }
+//
+//            return sb.ToString();
+//Wiwat P. Ignore special char replacement otherwise . character get replace
+            return str;
         }
     }
 }
